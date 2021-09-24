@@ -1,4 +1,4 @@
-﻿using DemoLogin.Api.ViewModels;
+﻿using DemoLogin.Api.Fire.ViewModels;
 using DemoLogin.Domain.Models;
 using DemoLogin.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoLogin.Api.Controllers
+namespace DemoLogin.Api.Fire.Controllers
 {
     [Route("api")]
     [Authorize]

@@ -22,7 +22,7 @@ namespace DemoLogin.Infra.Repositories
             return await _context.Products.Where(c => c.UserId == userId).AsNoTracking().ToListAsync();
         }
 
-        public async Task<Product> GetById(int id)
+        public async Task<Product> GetById(int id, string userId)
         {
             return await _context.Products.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         }

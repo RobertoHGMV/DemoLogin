@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoLogin.Infra", "src\Demo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoLogin.Api", "src\DemoLogin.Api\DemoLogin.Api.csproj", "{3FC1EF47-9D26-4DEE-867D-6721A2F60187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoLogin.Api.Fire", "src\DemoLogin.Api.Fire\DemoLogin.Api.Fire.csproj", "{C69BAD4B-47B6-4252-A1DF-B128DB0E3392}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoLogin.Api.Fire", "src\DemoLogin.Api.Fire\DemoLogin.Api.Fire.csproj", "{C69BAD4B-47B6-4252-A1DF-B128DB0E3392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoLogin.Api.AzureAd", "src\DemoLogin.Api.AzureAd\DemoLogin.Api.AzureAd.csproj", "{70D718D5-FCC6-426A-AECB-BF0D547EE4AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C69BAD4B-47B6-4252-A1DF-B128DB0E3392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C69BAD4B-47B6-4252-A1DF-B128DB0E3392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C69BAD4B-47B6-4252-A1DF-B128DB0E3392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70D718D5-FCC6-426A-AECB-BF0D547EE4AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D718D5-FCC6-426A-AECB-BF0D547EE4AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D718D5-FCC6-426A-AECB-BF0D547EE4AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D718D5-FCC6-426A-AECB-BF0D547EE4AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

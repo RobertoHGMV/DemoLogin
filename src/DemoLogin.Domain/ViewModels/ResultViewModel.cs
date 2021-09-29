@@ -1,4 +1,4 @@
-﻿namespace DemoLogin.Api.Fire.ViewModels
+﻿namespace DemoLogin.Domain.ViewModels
 {
     public class ResultViewModel
     {

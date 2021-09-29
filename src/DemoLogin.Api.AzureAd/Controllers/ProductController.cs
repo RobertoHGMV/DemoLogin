@@ -1,5 +1,4 @@
-﻿using DemoLogin.Api.Fire.ViewModels;
-using DemoLogin.Domain.Models;
+﻿using DemoLogin.Domain.Models;
 using DemoLogin.Domain.Repositories;
 using DemoLogin.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -8,12 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace DemoLogin.Api.Fire.Controllers
+namespace DemoLogin.Api.AzureAd.Controllers
 {
-    [Route("api")]
     [Authorize]
+    [Route("api")]
     public class ProductController : Controller
     {
         IProductRepository _repository;
@@ -29,7 +29,8 @@ namespace DemoLogin.Api.Fire.Controllers
         {
             try
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                //var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 var models = await _repository.GetAll(userId);
 
@@ -47,7 +48,8 @@ namespace DemoLogin.Api.Fire.Controllers
         {
             try
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                //var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 var model = await _repository.GetById(id, userId);
 
@@ -68,7 +70,8 @@ namespace DemoLogin.Api.Fire.Controllers
 
             try
             {
-                model.UserId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                //model.UserId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 await _repository.Add(model);
 
@@ -89,7 +92,8 @@ namespace DemoLogin.Api.Fire.Controllers
 
             try
             {
-                model.UserId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                //model.UserId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 var product = await _repository.GetById(model.Id, model.UserId);
 
@@ -118,7 +122,8 @@ namespace DemoLogin.Api.Fire.Controllers
         {
             try
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                //var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 var model = await _repository.GetById(id, userId);
 

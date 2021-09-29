@@ -1,5 +1,4 @@
-﻿using DemoLogin.Api.Fire.ViewModels;
-using DemoLogin.Domain.Models;
+﻿using DemoLogin.Domain.Models;
 using DemoLogin.Domain.Repositories;
 using DemoLogin.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -7,33 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoLogin.Api.Fire.Controllers
+namespace DemoLogin.Api.AzureAd.Controllers
 {
     [Route("api")]
-    [Authorize]
-    public class ProductController : Controller
+    public class UserController : Controller
     {
-        IProductRepository _repository;
+        IUserRepository _repository;
 
-        public ProductController(IProductRepository repository)
+        public UserController(IUserRepository repository)
         {
             _repository = repository;
         }
 
         [HttpGet]
         [Route("v1/[controller]")]
-        public async Task<ActionResult<List<Product>>> GetAll()
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<IList<User>>> GetAll()
         {
             try
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
-
-                var models = await _repository.GetAll(userId);
-
-                return Ok(new ResultViewModel { Success = true, Docs = models });
+                var models = await _repository.GetAll();
+                return Ok(models);
             }
             catch (Exception ex)
             {
@@ -43,15 +38,13 @@ namespace DemoLogin.Api.Fire.Controllers
 
         [HttpGet]
         [Route("v1/[controller]/{id:int}")]
-        public async Task<ActionResult<Product>> GetById(int id)
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<User>> GetById(string id)
         {
             try
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
-
-                var model = await _repository.GetById(id, userId);
-
-                return Ok(new ResultViewModel { Success = true, Docs = model });
+                var model = await _repository.GetById(id);
+                return Ok(model);
             }
             catch (Exception ex)
             {
@@ -61,18 +54,18 @@ namespace DemoLogin.Api.Fire.Controllers
 
         [HttpPost]
         [Route("v1/[controller]")]
-        public async Task<IActionResult> Add([FromBody] Product model)
+        [AllowAnonymous]
+        //[Authorize(Roles = "manager")]
+        public async Task<IActionResult> Add([FromBody] User model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new ResultViewModel { Success = false, Message = "Modelo inválido", Docs = ModelState });
 
             try
             {
-                model.UserId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
-
                 await _repository.Add(model);
 
-                return Created($"api/v1/product/{model.Id}", new ResultViewModel { Success = true, Docs = model });
+                return Created($"api/v1/user/{model.Id}", new ResultViewModel { Success = true, Docs = model });
             }
             catch (Exception ex)
             {
@@ -82,22 +75,17 @@ namespace DemoLogin.Api.Fire.Controllers
 
         [HttpPut]
         [Route("v1/[controller]/{id:int}")]
-        public async Task<IActionResult> Update([FromBody] Product model)
+        [Authorize(Roles = "manager")]
+        public async Task<IActionResult> Update(string id, [FromBody] User model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new ResultViewModel { Success = false, Message = "Modelo inválido", Docs = ModelState });
 
+            if (model.Id != id)
+                return NotFound(new ResultViewModel { Success = false, Message = $"Registro não encontrada", Docs = ModelState });
+
             try
             {
-                model.UserId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
-
-                var product = await _repository.GetById(model.Id, model.UserId);
-
-                if (product is null)
-                    return NotFound(new ResultViewModel { Success = false, Message = $"Registro não encontrada", Docs = ModelState });
-
-                product.Description = model.Description;
-
                 await _repository.Update(model);
 
                 return Ok(new ResultViewModel { Success = true, Docs = model });
@@ -114,13 +102,12 @@ namespace DemoLogin.Api.Fire.Controllers
 
         [HttpDelete]
         [Route("v1/[controller]/{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [Authorize(Roles = "manager")]
+        public async Task<IActionResult> Delete(string id)
         {
             try
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
-
-                var model = await _repository.GetById(id, userId);
+                var model = await _repository.GetById(id);
 
                 if (model is null)
                     return NotFound(new ResultViewModel { Success = false, Message = $"Registro não encontrada", Docs = ModelState });

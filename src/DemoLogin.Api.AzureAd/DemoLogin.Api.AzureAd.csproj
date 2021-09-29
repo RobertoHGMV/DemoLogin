@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DemoLogin.Api\DemoLogin.Api.csproj" />
     <ProjectReference Include="..\DemoLogin.Domain\DemoLogin.Domain.csproj" />
     <ProjectReference Include="..\DemoLogin.Infra\DemoLogin.Infra.csproj" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace DemoLogin.Api.Controllers
+namespace DemoLogin.Api.AzureAd.Controllers
 {
     [Route("api")]
     public class LoginController : Controller

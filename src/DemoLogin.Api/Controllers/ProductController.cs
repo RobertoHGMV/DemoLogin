@@ -1,6 +1,6 @@
-﻿using DemoLogin.Api.ViewModels;
-using DemoLogin.Domain.Models;
+﻿using DemoLogin.Domain.Models;
 using DemoLogin.Domain.Repositories;
+using DemoLogin.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
